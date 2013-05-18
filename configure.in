@@ -1,0 +1,13 @@
+AC_INIT(./src/opiom.c)
+AM_CONFIG_HEADER(./src/config.h)
+AM_INIT_AUTOMAKE(opiom,0.5.4-beta)
+ACLOCAL_AMFLAGS = -I m4
+AC_PROG_RANLIB
+AM_PROG_CC_C_O
+gl_EARLY
+AC_PROG_INSTALL
+gl_INIT
+AC_CONFIG_FILES(lib/Makefile)
+AC_OUTPUT(Makefile     \
+	  src/Makefile \
+	 )

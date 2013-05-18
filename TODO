@@ -1,0 +1,16 @@
+opIOm --- TODO
+
+Todo:
+
+2010-02-17
+
+    * for the PACKAGE :
+      * write a README file for distribution.
+      * write the documentation ./doc.
+      * check compatibility with other NIX flavours
+    * for the program :
+      * add measure random synchronous writing function.
+      * add output files for the unitary requests at least.
+      * read parameters from a file (gengetopt does that just need to add it to opiom.c)
+ 
+

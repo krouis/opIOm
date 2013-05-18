@@ -1,0 +1,21 @@
+This NEWS file records noteworthy changes, very tersely.
+See the manual for detailed information.
+
+  Copyright 2009, 2010 Khalifa Rouis.
+
+  Copying and distribution of this file, with or without modification,
+  are permitted in any medium without royalty provided the copyright
+  notice and this notice are preserved.
+
+Version 0.5 (18 February 2010)
+* Enhanced portability by adding GNUlib (getopt imported for gengetopt)
+* Added the missing Random Synchronous Write measures
+
+
+
+Version 0.4 (17 February 2010)
+* First "releasable" version.
+* Added the use of automake and autoconf.
+* Coding style changed to a GNUtically correct one (finally !).
+
+

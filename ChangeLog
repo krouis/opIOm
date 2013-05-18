@@ -1,0 +1,22 @@
+2010-02-24   Khalifa Rouis <khalifa@rouis.net>
+* src/functions.c (measure_random_synchronous_write)
+                  (measure_write_through): added intialization of
+                  `write_buffer` with random data to be written.
+2010-02-19   Khalifa Rouis <khalifa@rouis.net>
+* src/functions.c (measure_random_direct_read): changed the `testfile-name`
+                  opening and `read_buffer` allocation to a conditional
+		  state to ensure more compatibility.
+		  Deleted 2010-02-18 compatibility modifications to correct
+		  the bug they create (F_NOCACHE is a fcntl argument).
+2010-02-18   Khalifa Rouis <khalifa@rouis.net>
+
+* src/functions.c (measure_random_synchronous_write): New function.
+                  Added tests for compatibility with DARWIN (Mac OS)
+		  if DARWIN, O_DIRECT becomes F_NOCACHE
+* src/opiom.c (main): added conditional execution of 
+                      measure_random_synchronous_write if `a.random_flag_given`
+	              and `a.write_flag_given`.
+* configure.in: incremented release version to 0.5
+                included /lib to the autoconfig
+* added gnulib  getopt for gengetopt (in order to be more portable)
+                
