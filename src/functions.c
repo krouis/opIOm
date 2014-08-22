@@ -78,6 +78,8 @@ open_testfile(const char *testfile_name)
 {
   int testfile_descriptor;
   testfile_descriptor = open(testfile_name,O_RDWR);
+  if (testfile_descriptor < 0)
+    return EXIT_FAILURE;
   return EXIT_SUCCESS;
 }
 
@@ -185,7 +187,7 @@ measure_sequential_direct_read(const char *testfile_name, int request_size,
 
 #ifdef __linux__
   buf = posix_memalign((void*)&read_buffer, 512, local_request_size);
-  if (read_buffer == NULL)
+  if ((read_buffer == NULL) || (buf != 0))
   {
     perror("malloc");
     free(read_buffer);
@@ -193,7 +195,6 @@ measure_sequential_direct_read(const char *testfile_name, int request_size,
     return (EXIT_FAILURE);
   }
 #else /* other operating systems don't need memory alignement with O_DIRECT */
-  (void) buf; /* pacify the unused variable warning */
   read_buffer = (char*)malloc(local_request_size);
 #endif
 
@@ -252,7 +253,7 @@ measure_sequential_direct_read(const char *testfile_name, int request_size,
   time_elapsed += (stop_timer.tv_usec - start_timer.tv_usec) / 1000.0;
   printf("#umount %f\n",time_elapsed);
   total_time_elapsed+=time_elapsed;
-  printf("#total_size %d Bytes\n",total_size);
+  printf("#total_size %d Bytes\n", (int) total_size);
   printf("#total_time_elapsed %f ms\n",total_time_elapsed);
   print_global_performance(total_time_elapsed, total_size, request_size); 
   free(read_buffer);
@@ -312,7 +313,7 @@ measure_random_direct_read(const char *testfile_name,int request_size,
 
 #ifdef __linux__
   buf = posix_memalign((void*)&read_buffer, 512, local_request_size);
-  if (read_buffer == NULL)
+  if ((read_buffer == NULL) || (buf != 0))
   {
     perror("malloc");
     free(read_buffer);
@@ -398,7 +399,7 @@ measure_random_direct_read(const char *testfile_name,int request_size,
   time_elapsed += (stop_timer.tv_usec - start_timer.tv_usec) / 1000.0;
   printf("#umount %f\n",time_elapsed);
   total_time_elapsed+=time_elapsed;
-  printf("#total_size %d Bytes\n",total_size);
+  printf("#total_size %d Bytes\n", (int) total_size);
   printf("#total_time_elapsed %f ms\n",total_time_elapsed);
   print_global_performance(total_time_elapsed, total_size, request_size); 
   free(read_buffer);
@@ -503,7 +504,7 @@ measure_random_buffered_read(const char *testfile_name,int request_size,
   time_elapsed += (stop_timer.tv_usec - start_timer.tv_usec) / 1000.0;
   printf("#umount %f\n",time_elapsed);
   total_time_elapsed+=time_elapsed;
-  printf("#total_size %d Bytes\n",total_size);
+  printf("#total_size %d Bytes\n", (int) total_size);
   printf("#total_time_elapsed %f ms\n",total_time_elapsed);
   print_global_performance(total_time_elapsed, total_size, request_size); 
   free(buff);
@@ -617,8 +618,8 @@ measure_write_through(const char *testfile_name, int request_size,
   time_elapsed += (stop_timer.tv_usec - start_timer.tv_usec) / 1000.0;
   printf("#umount %f\n",time_elapsed);
   total_time_elapsed+=time_elapsed; */ /* should be deleted after the tests 15032010 */
-  printf("#local_request_size %d Bytes\n",local_request_size); /* delete after tests 15032010 */
-  printf("#total_size %d Bytes\n",total_size);
+  printf("#local_request_size %d Bytes\n", (int) local_request_size); /* delete after tests 15032010 */
+  printf("#total_size %d Bytes\n", (int) total_size);
   printf("#total_time_elapsed %f ms\n",total_time_elapsed);
   close(testfile_descriptor); 
   print_global_performance(total_time_elapsed, total_size, request_size); 
@@ -847,7 +848,7 @@ measure_random_synchrounous_write(const char *testfile_name, int request_size,
   time_elapsed += (stop_timer.tv_usec - start_timer.tv_usec) / 1000.0;
   printf("#umount %f\n",time_elapsed);
   total_time_elapsed+=time_elapsed;
-  printf("#total_size %d Bytes\n",total_size);
+  printf("#total_size %d Bytes\n",(int) total_size);
   printf("#total_time_elapsed %f ms\n",total_time_elapsed);
   print_global_performance(total_time_elapsed, total_size, request_size); 
   free(write_buffer);
